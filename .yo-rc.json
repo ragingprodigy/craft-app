@@ -22,7 +22,7 @@
     "routeDirectory": "client/app/",
     "directiveDirectory": "client/app/",
     "filterDirectory": "client/app/",
-    "serviceDirectory": "client/app/",
+    "serviceDirectory": "client/app/services/",
     "basePath": "client",
     "moduleName": "",
     "filters": [
