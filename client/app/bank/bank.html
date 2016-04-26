@@ -1,18 +1,18 @@
-<div ng-include="'components/navbar/navbar.html'"></div>
+<div data-ng-include="'components/navbar/navbar.html'"></div>
 
 <div class="container large">
     <div class="row">
         <div data-ng-class="{'col-md-12': !editing, 'col-md-8': editing}">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    List of Banks
+                    <span class="text-uppercase">List of Banks</span>
                     <button data-ng-hide="editing" class="btn btn-xs pull-right btn-success"
                             data-ng-click="showNewForm()">
                         <i class="fa fa-plus-square"></i> New Bank
                     </button>
 
                     <div class="pull-right">
-                        <input class="search" type="text" ng-model="bankFilter" placeholder="Filter...">
+                        <input class="search" type="text" data-ng-model="bankFilter" placeholder="Filter...">
                     </div>
                 </div>
                 <div class="panel-body">
@@ -27,7 +27,7 @@
                         </thead>
                         <tbody>
                         <tr data-ng-repeat="b in banks | filter: bankFilter">
-                            <td>{{$index+1}}.</td>
+                            <td>{{::$index+1}}.</td>
                             <td data-ng-bind="b.name"></td>
                             <td data-ng-bind="b.sortCode"></td>
                             <td>
@@ -69,7 +69,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="row">
                             <div class="col-md-12">
                                 <button class="btn btn-sm btn-primary" type="submit"
                                         data-ng-disabled="bankForm.$invalid || submitting">

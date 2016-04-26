@@ -5,10 +5,7 @@ angular.module 'craftAppApp'
   _selectedIndex = null
   
   # Fetch all banks
-  getBanks = ->
-    $scope.banks = $bank.query()
-    
-  getBanks()
+  $scope.banks = $bank.query()
 
   # Edit Button Event Handler
   $scope.editBank = (index) ->
@@ -21,13 +18,14 @@ angular.module 'craftAppApp'
     $scope.editing = true
     $scope.bank = {}
 
+  # Reset Form Model and Hide Form
   resetAndCancel = (theForm) ->
     theForm.$setPristine()
     theForm.$setUntouched()
     $scope.bank = {}
     $scope.editing = false
     
-  # Reset Form Model and Hide Form
+  # Scope shadow method
   $scope.resetAndCancel = (form) ->
     resetAndCancel(form)
     
@@ -50,6 +48,7 @@ angular.module 'craftAppApp'
         , handleError
     else toastr.error "Please fill the form before submitting"
       
+  # Handle HTTP Errors
   handleError = (err) ->
     # Show Error message
     if err.data.message? then toastr.error err.data.message

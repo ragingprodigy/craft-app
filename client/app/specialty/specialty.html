@@ -1,13 +1,86 @@
-<div ng-include="'components/navbar/navbar.html'"></div>
+<div data-ng-include="'components/navbar/navbar.html'"></div>
 
 <div class="container large">
     <div class="row">
-        <div class="col-md-12">
+        <div data-ng-class="{'col-md-12': !editing, 'col-md-7': editing}">
             <div class="panel panel-primary">
-                <div class="panel-heading">List of Specialties</div>
-                <div class="panel-body"></div>
+                <div class="panel-heading">
+                    <span class="text-uppercase">List of Specialties</span>
+                    <button data-ng-hide="editing" class="btn btn-xs pull-right btn-success"
+                            data-ng-click="showNewForm()">
+                        <i class="fa fa-plus-square"></i> New Specialty
+                    </button>
+
+                    <div class="pull-right">
+                        <input class="search" type="text" data-ng-model="specialtyFilter" placeholder="Filter...">
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                        <tr>
+                            <th class="tiny-col text-center">S/N.</th>
+                            <th>Specialty <em>(Description)</em></th>
+                            <th class="col-md-1 text-center">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr data-ng-repeat="s in specialties | filter: specialtyFilter">
+                            <td class="text-center">{{::$index+1}}.</td>
+                            <td data-ng-bind-html="[s.name,'<br><small><em>',s.description,'</em></small>'].join('')"></td>
+                            <td>
+                                <button class="btn btn-sm btn-block btn-warning" data-ng-click="editSpecialty($index)">
+                                    <i class="fa fa-edit"></i> Edit
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
                 <div class="panel-footer text-right">
                     <em>Last Updated: {{$ago()}}</em>
+                </div>
+            </div>
+        </div>
+
+        <div data-ng-class="{'col-md-5': editing, hidden: !editing}" data-ng-show="editing">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <span data-ng-bind="specialty._id ? 'Edit Specialty Details':'Add Specialty'"></span>
+                </div>
+                <div class="panel-body">
+                    <form class="form form-horizontal" data-ng-submit="specialtyForm.$valid && submit(specialtyForm)"
+                          name="specialtyForm">
+                        <div class="form-group">
+                            <label class="col-md-4">Specialty Name <span class="required">*</span> </label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" data-ng-model="specialty.name" placeholder="Specialty Name"
+                                       required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4">Description </label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" data-ng-model="specialty.description"
+                                       placeholder="Description">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button class="btn btn-sm btn-primary" type="submit"
+                                        data-ng-disabled="specialtyForm.$invalid || submitting">
+                                    <i class="fa fa-check-square"></i>
+                                    <span data-ng-bind="specialty._id ? 'Update Specialty Details':'Create Specialty'"></span>
+                                </button>
+                                <button class="btn btn-sm btn-danger pull-right" type="reset"
+                                        data-ng-click="resetAndCancel(specialtyForm)">
+                                    <i class="fa fa-times-circle-o"></i> Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
