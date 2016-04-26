@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module 'craftAppApp'
-.controller 'LoginCtrl', ($scope, $auth, $window, toastr, $craftAuth, $rootScope) ->
+.controller 'LoginCtrl', ( $scope, $auth, $window, toastr, $craftAuth, $rootScope, $state ) ->
   $scope.login = ->
     $scope.formError = null
     $scope.submitting = true
@@ -10,12 +10,10 @@ angular.module 'craftAppApp'
       username: $scope.username
       password: $scope.password
     .then (r) ->
-      console.log r
-      
-    #   Auth.me (user) ->
-    #     $rootScope.$user = user
-    #     toastr.success 'Login Successful!'
-    #     $window.location.href = '/dashboard/'
+      $rootScope.$user = r.data.user
+      $rootScope.$apply()
+      toastr.success 'Login Successful!'
+      $state.go "dashboard"
     , (e) ->
       $scope.submitting = false
       toastr.error e.data.message
