@@ -32,7 +32,7 @@ var ArtisanSchema = new Schema({
   },
   identification: String,  // Url to the Uploaded Image
   bankDetails: {
-    nubanNumber: { type: String, minlength: 10, maxlength: 10, required: true },
+    nubanNumber: { type: String, minlength: 10, maxlength: 10 },
     accountName: String,
     bank: { type: Schema.Types.ObjectId, ref: "Bank" }
   },

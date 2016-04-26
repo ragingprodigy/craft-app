@@ -55,7 +55,7 @@ exports.destroy = function(req, res) {
 };
 
 function handleError(res, err) {
-  console.log("Artisan Module Error:", err.message);
+  //console.log("Artisan Module Error:", err.message);
   
   if (err.name == 'ValidationError') {
     return res.status(400).json({ message: err.message, errors: err.errors });
