@@ -444,6 +444,23 @@ em {
   }
 }
 
+.search {
+  color: #e6e6e6;
+  font-weight: 300;
+  font-size: 1.5em;
+  padding: 7px;
+  margin-top: -10px;
+  border: 0;
+  background-color: transparent;
+  outline: none;
+  -webkit-appearance: none;
+
+  &:focus {
+    -webkit-transition: all .4s ease;
+    transition: all .4s ease;
+  }
+}
+
 .navbar {
 
   .dropdown-menu > li > a {
@@ -451,8 +468,14 @@ em {
   }
 }
 
+.tiny-col {
+  width: 50px;
+}
+
 // Component styles are injected through grunt
 // injector
+@import 'bank/bank.scss';
 @import 'dashboard/dashboard.scss';
 @import 'login/login.scss';
+@import 'specialty/specialty.scss';
 // endinjector
