@@ -2,7 +2,7 @@
 
 angular.module 'craftAppApp'
 .controller 'LoginCtrl', ($scope, $auth, $window, toastr, $craftAuth, $rootScope, $state) ->
-  if $auth.isAuthenticated then $state.go "dashboard"
+  if $auth.isAuthenticated() then $state.go "dashboard"
   
   $scope.login = ->
     $scope.formError = null
