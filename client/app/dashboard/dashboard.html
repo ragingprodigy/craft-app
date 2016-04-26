@@ -1,3 +1,15 @@
-<div class="col-md-12">
-This is the dashboard view.
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="container large">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">List of Artisans</div>
+                <div class="panel-body"></div>
+                <div class="panel-footer text-right">
+                    <em>Last Updated: {{$ago()}}</em>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

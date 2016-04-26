@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module 'craftAppApp'
-.controller 'NavbarCtrl', ($scope, $location, $auth, $rootScope) ->
+.controller 'NavbarCtrl', ($scope, $location, $auth, $rootScope, $state) ->
   $scope.logout = ->
     if confirm 'Are you sure?'
       $auth.logout()

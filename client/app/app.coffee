@@ -25,7 +25,7 @@ angular.module 'craftAppApp', [
   $rootScope.formatMoney = (m) ->
     parseInt(m).formatMoney 2
 
-  $rootScope.ago = (dt) ->
+  $rootScope.$ago = (dt) ->
     moment(dt).fromNow()
 
   $rootScope.$on '$stateChangeStart', (event, next) ->

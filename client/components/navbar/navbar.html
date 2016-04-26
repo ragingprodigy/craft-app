@@ -17,8 +17,7 @@
 
             <li ng-hide="isGuest()"><a ng-click="logout()" class="btn-link"> <i
                     class="glyphicon glyphicon-off"></i>
-                Logout <span ng-hide="$user.role=='admin'">({{$user._member.firstName + " " + $user._member
-                    .surname}})</span>
+                Logout <span ng-hide="$user.role=='admin'">({{$user.name}})</span>
             </a></li>
         </ul>
     </div>
