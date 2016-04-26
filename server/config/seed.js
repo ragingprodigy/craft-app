@@ -5,20 +5,33 @@
 
 'use strict';
 
+var env = process.env.NODE_ENV;
 var User = require("../api/auth/auth.model");
-    
 
-User.count({}, function(err, ct) {
-  if (err) { console.log(err); }
-  
-  if (ct< 1) {
+if (env == 'test') {
+  User.find({}).remove(function () {
     // Create Default Admin User
     var user = new User();
-    user.name = 'Seun Williams';
-    user.username = 'testuser';
+    user.name = 'Test User';
+    user.username = 'user';
     user.password = user.generateHash('password');
-    user.email = "dapo@softcom.ng";
+    user.email = "user@craft.io";
 
-    user.save();
-  }
-});
+    user.save(function () { });
+  });
+} else {
+  User.count({}, function(err, ct) {
+    if (err) { console.log(err); }
+
+    if (ct < 1) {
+      // Create Default Admin User
+      var user = new User();
+      user.name = 'Seun Williams';
+      user.username = 'testuser';
+      user.password = user.generateHash('password');
+      user.email = "dapo@softcom.ng";
+
+      user.save(function () { });
+    }
+  });
+}

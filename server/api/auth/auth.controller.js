@@ -23,7 +23,6 @@ function createJWT(user) {
 
 // Get list of auths
 exports.index = function(req, res) {
-  console.log("Auth Index Request received");
   Auth.find(function (err, auths) {
     if(err) { return handleError(res, err); }
     return res.json(200, auths);
@@ -77,6 +76,10 @@ exports.destroy = function(req, res) {
 
 // Handle Login Requests
 exports.signIn = function(req, res) {
+  if (!('username' in req.body) || !('password' in req.body)) {
+    return res.status(400).json({ message: "Please provide both username and password." })
+  }
+  
   Auth.findOne({ username: req.body.username }, '+password', function(err, user) {
     if (err) { return handleError(res, err); }
     

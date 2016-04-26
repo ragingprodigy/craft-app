@@ -44,4 +44,5 @@ server.listen(config.port, config.ip, function () {
 });
 
 // Expose app
+//noinspection JSUnresolvedVariable
 exports = module.exports = app;
