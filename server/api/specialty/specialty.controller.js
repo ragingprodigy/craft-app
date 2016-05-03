@@ -5,7 +5,7 @@ var Specialty = require('./specialty.model');
 
 // Get list of specialtys
 exports.index = function(req, res) {
-  Specialty.find(function (err, specialtys) {
+  Specialty.find({}, '_id name description', function (err, specialtys) {
     if(err) { return handleError(res, err); }
     return res.json(200, specialtys);
   });

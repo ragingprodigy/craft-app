@@ -5,7 +5,7 @@ var Bank = require('./bank.model');
 
 // Get list of banks
 exports.index = function(req, res) {
-  Bank.find(function (err, banks) {
+  Bank.find({}, '_id name', function (err, banks) {
     if(err) { return handleError(res, err); }
     return res.json(200, banks);
   });

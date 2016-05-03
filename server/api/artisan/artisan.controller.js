@@ -5,7 +5,10 @@ var Artisan = require('./artisan.model');
 
 // Get list of artisans
 exports.index = function(req, res) {
-  Artisan.find(function (err, artisans) {
+  Artisan.find({})
+    .populate('specialty', '_id name description')
+    .populate('bankDetails.bank', '_id name')
+    .exec(function (err, artisans) {
     if(err) { return handleError(res, err); }
     return res.json(200, artisans);
   });
