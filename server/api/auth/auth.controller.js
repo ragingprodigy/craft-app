@@ -80,7 +80,7 @@ exports.signIn = function(req, res) {
     return res.status(400).json({ message: "Please provide both username and password." })
   }
   
-  Auth.findOne({ username: req.body.username }, '+password', function(err, user) {
+  Auth.findOne({ username: req.body.username }, '+password').populate('rep', 'name').exec(function(err, user) {
     if (err) { return handleError(res, err); }
     
     if (!user) { return res.status(401).send({ message: 'Wrong username and/or password' }); }

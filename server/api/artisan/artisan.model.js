@@ -57,6 +57,7 @@ var ArtisanSchema = new Schema({
   location: {
     type: [Number] // [<longitude>, <latitude>]
   },
+  rep: { type: Schema.Types.ObjectId, ref: "Rep", required: true },
   active: Boolean
 });
 

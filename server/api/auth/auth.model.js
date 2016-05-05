@@ -6,7 +6,7 @@ var mongoose = require('mongoose'),
 
 var AuthSchema = new Schema({
   name: String,
-  role: { type: String, default: "backend-user" },
+  role: { type: String, default: "rep" },
   username: String,
   password: { type: String, select: false },
   email: String,
@@ -15,6 +15,7 @@ var AuthSchema = new Schema({
   lastLoginFrom: { type: String, select: false },
   createdAt: { type: Date, default: Date.now },
   createdBy: { type: Schema.Types.ObjectId, ref: "Auth" },
+  rep: { type: Schema.Types.ObjectId, ref: "Rep" },
   active: { type: Boolean, default: true }
 });
 

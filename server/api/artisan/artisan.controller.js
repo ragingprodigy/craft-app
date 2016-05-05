@@ -25,6 +25,8 @@ exports.show = function(req, res) {
 
 // Creates a new artisan in the DB.
 exports.create = function(req, res) {
+  req.body.rep = req.user;
+  
   Artisan.create(req.body, function(err, artisan) {
     if(err) { return handleError(res, err); }
     return res.json(201, artisan);
