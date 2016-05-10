@@ -10,8 +10,8 @@ angular.module 'craftAppApp'
   $scope.isGuest = ->
     !$auth.isAuthenticated()
 
-  $scope.notAdmin = ->
-    $rootScope.$user.role isnt 'admin'
+  $scope.isRep = ->
+    $rootScope.$user.role is 'rep'
 
   $scope.isCollapsed = true
 

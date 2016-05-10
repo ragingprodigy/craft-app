@@ -13,9 +13,9 @@
     <div collapse="isCollapsed" class="pull-right navbar-collapse collapse" id="navbar-main">
         <ul class="nav navbar-nav">
             <li ng-show="!isGuest()"><a ui-sref="dashboard"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li ng-show="!isGuest()"><a ui-sref="agent"><i class="fa fa-users"></i> Agents</a></li>
+            <li ng-show="!isGuest() && !isRep()"><a ui-sref="agent"><i class="fa fa-users"></i> Agents</a></li>
 
-            <li class="dropdown" ng-hide="isGuest()">
+            <li class="dropdown" ng-hide="isGuest() || isRep()">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
                     <i class="fa fa-cogs"></i> Settings
                     <span class="caret"></span>

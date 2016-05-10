@@ -15,7 +15,7 @@ angular.module 'craftAppApp', [
   'cloudinary'
 ]
   
-.run ($auth, $rootScope, $window) ->
+.run ($auth, $rootScope, $location) ->
   $rootScope.cl = cloudinary.Cloudinary.new()
   $rootScope.cl.fromEnvironment()
 
@@ -29,7 +29,8 @@ angular.module 'craftAppApp', [
     moment(dt).fromNow()
 
   $rootScope.$on '$stateChangeStart', (event, next) ->
-    if not $auth.isAuthenticated() and not next.guestView then $window.location.href = '/'
+    if $auth.isAuthenticated() and next.isAdminView and $rootScope.$user.role is 'rep' then $location.path "/"
+    if not $auth.isAuthenticated() and not next.guestView then $location.path '/'
 
 .config ( $stateProvider, $urlRouterProvider, $locationProvider, $authProvider, $httpProvider, cloudinaryProvider ) ->
   $httpProvider.interceptors.push("$requestInterceptor")
