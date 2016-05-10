@@ -14,7 +14,7 @@ function createJWT(user) {
         username: user.username,
         role: user.role,
         name: user.name,
-        rep: user.rep._id,
+        rep: user.rep ? user.rep._id : "",
         lastLogin: new Date(),
         iat: moment().unix(),
         exp: moment().add(14, 'days').unix()
