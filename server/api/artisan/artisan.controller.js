@@ -5,13 +5,18 @@ var Artisan = require('./artisan.model');
 
 // Get list of artisans
 exports.index = function(req, res) {
-  Artisan.find({})
-    .populate('specialty', '_id name description')
-    .populate('bankDetails.bank', '_id name')
-    .exec(function (err, artisans) {
-    if(err) { return handleError(res, err); }
-    return res.json(200, artisans);
-  });
+  var query = Artisan.find({});
+
+  if (!req.query.lean) {
+    query.populate('specialty', '_id name description')
+  }
+
+  query.populate('bankDetails.bank', '_id name')
+      .populate('rep', '_id name')
+      .exec(function (err, artisans) {
+        if(err) { return handleError(res, err); }
+        return res.json(200, artisans);
+      });
 };
 
 // Get a single artisan
@@ -25,8 +30,13 @@ exports.show = function(req, res) {
 
 // Creates a new artisan in the DB.
 exports.create = function(req, res) {
-  req.body.rep = req.user;
-  
+  req.body.rep = req.rep;
+  req.body.specialty = req.body.specialty._id;
+
+  if (req.body.bankDetails != undefined) {
+    req.body.bankDetails.bank = req.body.bankDetails.bank._id;
+  }
+
   Artisan.create(req.body, function(err, artisan) {
     if(err) { return handleError(res, err); }
     return res.json(201, artisan);

@@ -1,0 +1,129 @@
+<div data-ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="container large">
+    <div class="row">
+        <div data-ng-class="{'col-md-12': !editing, 'col-md-7': editing}">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <span class="text-uppercase">List of Agents</span>
+                    <button data-ng-hide="editing" class="btn btn-xs pull-right btn-success"
+                            data-ng-click="showNewForm()">
+                        <i class="fa fa-plus-square"></i> New Agent
+                    </button>
+
+                    <div class="pull-right">
+                        <input class="search" type="text" data-ng-model="agentFilter" placeholder="Filter...">
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                        <tr class="text-uppercase">
+                            <th class="tiny-col text-center">S/N.</th>
+                            <th>Agent Name</th>
+                            <th>Email Address</th>
+                            <th>Phone Number</th>
+                            <th ng-hide="editing">Address</th>
+                            <th>Username</th>
+                            <th class="col-md-1 text-center" ng-hide="editing">ACTION</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr data-ng-repeat="b in agents | filter: agentFilter">
+                            <td class="text-center">{{::$index+1}}.</td>
+                            <td data-ng-bind="b.name"></td>
+                            <td data-ng-bind="b.email"></td>
+                            <td data-ng-bind="b.phone"></td>
+                            <td data-ng-bind="b.address" ng-hide="editing"></td>
+                            <td data-ng-bind="b.user.username"></td>
+                            <td class="text-center" ng-hide="editing">
+                                <button class="btn btn-xs btn-warning" title="Edit Agent"
+                                        data-ng-click="editAgent($index)">
+                                    <i class="fa fa-edit"></i>
+                                </button>
+                                <button class="btn btn-xs btn-success" title="Create Account" ng-show="!b.user"
+                                        data-ng-click="createAccount($index)">
+                                    <i class="fa fa-user"></i>
+                                </button>
+                                <button class="btn btn-xs btn-info" title="Reset Account Password" ng-show="b.user"
+                                        data-ng-click="resetPassword($index)">
+                                    <i class="fa fa-refresh"></i>
+                                </button>
+                                <button class="btn btn-xs btn-danger" title="Deactivate Agent" ng-show="b.active"
+                                        data-ng-click="deactivateAgent($index)">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                                <button class="btn btn-xs btn-success" title="Reactivate Agent" ng-hide="b.active"
+                                        data-ng-click="activateAgent($index)">
+                                    <i class="fa fa-check"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="panel-footer text-right">
+                    <em>Total Agent Count: <span ng-bind="'('+agents.length+')'"></span></em>
+                </div>
+            </div>
+        </div>
+
+        <div data-ng-class="{'col-md-5': editing, hidden: !editing}" data-ng-show="editing">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <span data-ng-bind="agent._id ? 'Edit Agent Details':'Add Agent'"></span>
+                </div>
+                <div class="panel-body">
+                    <form class="form form-horizontal" data-ng-submit="agentForm.$valid && submit(agentForm)"
+                          name="agentForm">
+                        <div class="form-group">
+                            <label class="col-md-4">Agent Name <span class="required">*</span> </label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" data-ng-model="agent.name" placeholder="Agent Name"
+                                       required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4">Phone Number <span class="required">*</span> </label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" data-ng-model="agent.phone"
+                                       placeholder="Agent Phone Number"
+                                       required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4">Email Address <span class="required">*</span></label>
+                            <div class="col-md-8">
+                                <input type="email" class="form-control" data-ng-model="agent.email"
+                                       placeholder="Email Address" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4">Address </label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" data-ng-model="agent.address"
+                                       placeholder="Contact Address">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button class="btn btn-sm btn-primary" type="submit"
+                                        data-ng-disabled="agentForm.$invalid || submitting">
+                                    <i class="fa fa-check-square"></i>
+                                    <span data-ng-bind="agent._id ? 'Update Agent Details':'Create Agent'"></span>
+                                </button>
+                                <button class="btn btn-sm btn-danger pull-right" type="reset"
+                                        data-ng-click="resetAndCancel(agentForm)">
+                                    <i class="fa fa-times-circle-o"></i> Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

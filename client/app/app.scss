@@ -474,6 +474,7 @@ em {
 
 // Component styles are injected through grunt
 // injector
+@import 'agent/agent.scss';
 @import 'bank/bank.scss';
 @import 'dashboard/dashboard.scss';
 @import 'login/login.scss';

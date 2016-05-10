@@ -28,5 +28,7 @@ module.exports =  function (req, res, next) {
     if (payload.exp <= moment().unix()) { return res.status(401).send({ message: 'Token has expired' }); }
     
     req.user = payload.sub;
+    req.rep = payload.rep;
+    
     next();
 };

@@ -11,6 +11,8 @@ router.post('/changePassword', controller.changePassword);
 
 router.use(sessionSec);
 
+router.post('/resetPassword', controller.resetPassword);
+
 // router.get('/', controller.index);
 // router.get('/:id', controller.show);
 // router.post('/', controller.create);

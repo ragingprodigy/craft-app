@@ -25,7 +25,10 @@ if (env == 'test') {
         user.email = "user@craft.io";
         user.rep = rep._id;
 
-        user.save(function () { });
+        user.save(function () {
+          rep.user = user._id;
+          rep.save();
+        });
       });
     });
   });
@@ -44,7 +47,10 @@ if (env == 'test') {
         user.email = "dapo@craft.ng";
         user.rep = rep._id;
 
-        user.save(function () { });
+        user.save(function () {
+          rep.user = user._id;
+          rep.save();
+        });
       });
     }
   });

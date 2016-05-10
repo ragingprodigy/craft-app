@@ -4,8 +4,41 @@
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-primary">
-                <div class="panel-heading">List of Artisans</div>
-                <div class="panel-body"></div>
+                <div class="panel-heading">List of Artisans ({{artisans.length}})</div>
+                <div class="panel-body">
+                    <table class="table table-striped table-bordered table-condensed table-hover">
+                        <thead>
+                        <tr>
+                            <th style="width: 40px;">S/N</th>
+                            <th><i class="fa fa-info"></i> Name</th>
+                            <th><i class="fa fa-building"></i> Business Name</th>
+                            <th><i class="fa fa-phone"></i> Phone Number</th>
+                            <!--<th><i class="fa fa-home"></i> Address</th>-->
+                            <th><i class="fa fa-star"></i> Specialty</th>
+                            <th><i class="fa fa-map-marker"></i> Location</th>
+                            <th><i class="fa fa-user"></i> REP</th>
+                            <th class="col-sm-1" />
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr data-ng-repeat="a in artisans">
+                            <td class="text-center">{{$index+1}}.</td>
+                            <td data-ng-bind="[a.firstName,a.middleName,a.surname].join(' ')"></td>
+                            <td data-ng-bind="a.businessName"></td>
+                            <td data-ng-bind="a.phone"></td>
+                            <!--<td data-ng-bind="a.address"></td>-->
+                            <td data-ng-bind="a.specialty.name"></td>
+                            <td data-ng-bind="a.location"></td>
+                            <td data-ng-bind="a.rep.name"></td>
+                            <td class="text-center">
+                                <button class="btn btn-xs btn-primary"><i class="fa fa-eye"></i> Open</button>
+                                <!--<button class="btn btn-xs btn-warning"><i class="fa fa-edit"></i> Edit</button>-->
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <!--<pre>{{artisans|json}}</pre>-->
+                </div>
                 <div class="panel-footer text-right">
                     <em>Last Updated: {{$ago()}}</em>
                 </div>

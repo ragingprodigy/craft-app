@@ -14,12 +14,32 @@ function createJWT(user) {
         username: user.username,
         role: user.role,
         name: user.name,
+        rep: user.rep._id,
         lastLogin: new Date(),
         iat: moment().unix(),
         exp: moment().add(14, 'days').unix()
     };
     return jwt.encode(payload, process.env.SESSION_SECRET);
 }
+
+/**
+ * Reset password to default
+ *
+ * @param req
+ * @param res
+ */
+exports.resetPassword = function (req, res) {
+  Auth.findById(req.body.id, function (err, user) {
+    if(err) { return handleError(res, err); }
+    if(!user) { return res.send(404); }
+
+    user.password = user.generateHash('password');
+    user.save(function (err) {
+      if (err) { return handleError(res, err); }
+      return res.json(201, { message: 'Password reset successful!' });
+    });
+  });
+};
 
 // Get list of auths
 exports.index = function(req, res) {
@@ -74,7 +94,13 @@ exports.destroy = function(req, res) {
   });
 };
 
-// Handle Login Requests
+/**
+ * Handle Login Requests
+ *
+ * @param req
+ * @param res
+ * @returns {*}
+ */
 exports.signIn = function(req, res) {
   if (!('username' in req.body) || !('password' in req.body)) {
     return res.status(400).json({ message: "Please provide both username and password." })

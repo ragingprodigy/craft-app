@@ -3,6 +3,6 @@
 angular.module 'craftAppApp'
 .config ($stateProvider) ->
   $stateProvider.state 'specialty',
-    url: '/meta/specialties'
+    url: '/meta/specialties/'
     templateUrl: 'app/specialty/specialty.html'
     controller: 'SpecialtyCtrl'

@@ -1,9 +1,15 @@
 'use strict';
 
 var express = require('express');
-var controller = require('./rep.controller');
+var controller = require('./rep.controller'),
+  sessionSec = require('../../components/tools/sessionSec');
 
 var router = express.Router();
+router.use(sessionSec);
+
+router.post('/createAccount', controller.createAccount);
+router.post('/activate', controller.activate);
+router.post('/deactivate', controller.deactivate);
 
 router.get('/', controller.index);
 router.get('/:id', controller.show);
