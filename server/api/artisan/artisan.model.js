@@ -58,7 +58,10 @@ var ArtisanSchema = new Schema({
     type: [Number] // [<longitude>, <latitude>]
   },
   rep: { type: Schema.Types.ObjectId, ref: "Rep", required: true },
-  active: Boolean
+  active: Boolean,
+  deleted: { type: Boolean, default: false },
+  deletedAt: Date,
+  deletedBy: { type: Schema.Types.ObjectId, ref: "Rep", required: true }
 });
 
 ArtisanSchema.index({ location: '2d', specialty: 1 });

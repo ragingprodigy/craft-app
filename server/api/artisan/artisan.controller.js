@@ -5,7 +5,7 @@ var Artisan = require('./artisan.model');
 
 // Get list of artisans
 exports.index = function(req, res) {
-  var query = Artisan.find({});
+  var query = Artisan.find({ deleted: false });
 
   if (!req.query.lean) {
     query.populate('specialty', '_id name description')
@@ -57,12 +57,17 @@ exports.update = function(req, res) {
   });
 };
 
-// Deletes a artisan from the DB.
+// Soft delete an artisan
 exports.destroy = function(req, res) {
   Artisan.findById(req.params.id, function (err, artisan) {
     if(err) { return handleError(res, err); }
     if(!artisan) { return res.send(404); }
-    artisan.remove(function(err) {
+
+    artisan.deleted = true;
+    artisan.deletedAt = new Date();
+    artisan.deletedBy = req.user;
+
+    artisan.save(function(err) {
       if(err) { return handleError(res, err); }
       return res.send(204);
     });
@@ -70,8 +75,6 @@ exports.destroy = function(req, res) {
 };
 
 function handleError(res, err) {
-  //console.log("Artisan Module Error:", err.message);
-  
   if (err.name == 'ValidationError') {
     return res.status(400).json({ message: err.message, errors: err.errors });
   }
