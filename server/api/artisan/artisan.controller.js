@@ -19,6 +19,23 @@ exports.index = function(req, res) {
       });
 };
 
+// Get list of artisans (including deleted records)
+exports.all = function(req, res) {
+  var query = Artisan.find({ });
+
+  if (!req.query.lean) {
+    query.populate('specialty', '_id name description')
+  }
+
+  query.populate('bankDetails.bank', '_id name')
+      .populate('rep', '_id name')
+      .populate('deletedBy', '_id name')
+      .exec(function (err, artisans) {
+        if(err) { return handleError(res, err); }
+        return res.json(200, artisans);
+      });
+};
+
 // Get a single artisan
 exports.show = function(req, res) {
   Artisan.findById(req.params.id, function (err, artisan) {
