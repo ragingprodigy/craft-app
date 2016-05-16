@@ -61,7 +61,7 @@ var ArtisanSchema = new Schema({
   active: Boolean,
   deleted: { type: Boolean, default: false },
   deletedAt: Date,
-  deletedBy: { type: Schema.Types.ObjectId, ref: "Rep", required: true }
+  deletedBy: { type: Schema.Types.ObjectId, ref: "Rep", required: false }
 });
 
 ArtisanSchema.index({ location: '2d', specialty: 1 });

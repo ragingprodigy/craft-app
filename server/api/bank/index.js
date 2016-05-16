@@ -5,9 +5,9 @@ var controller = require('./bank.controller'),
     sessionSec = require('../../components/tools/sessionSec');
 
 var router = express.Router();
-router.use(sessionSec);
-
 router.get('/', controller.index);
+
+router.use(sessionSec);
 router.get('/:id', controller.show);
 router.post('/', controller.create);
 router.put('/:id', controller.update);
