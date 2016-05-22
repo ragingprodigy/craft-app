@@ -30,6 +30,7 @@ var ArtisanSchema = new Schema({
     type: String, 
     required: [true, 'Artisan address is required']
   },
+  profileUrl: String,  // Url to the Uploaded Image
   identification: String,  // Url to the Uploaded Image
   bankDetails: {
     nubanNumber: { type: String, minlength: 10, maxlength: 10 },

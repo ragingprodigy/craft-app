@@ -67,7 +67,9 @@ exports.update = function(req, res) {
     var updated = _.merge(artisan, req.body);
     updated.save(function (err) {
       if (err) { return handleError(res, err); }
-      return res.json(200, artisan);
+      getArtisan(artisan._id, function (a) {
+        return res.json(a);
+      });
     });
   });
 };
