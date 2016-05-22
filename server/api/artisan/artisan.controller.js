@@ -38,10 +38,8 @@ exports.all = function(req, res) {
 
 // Get a single artisan
 exports.show = function(req, res) {
-  Artisan.findById(req.params.id, function (err, artisan) {
-    if(err) { return handleError(res, err); }
-    if(!artisan) { return res.send(404); }
-    return res.json(artisan);
+  getArtisan(req.params.id, function (a) {
+    return res.json(a);
   });
 };
 
@@ -74,6 +72,49 @@ exports.update = function(req, res) {
   });
 };
 
+/**
+ * Add a new Work Pic
+ * @param req
+ * @param res
+ */
+exports.newWorkPic = function (req, res) {
+  Artisan.findById(req.params.id, function (err, artisan) {
+    if (err) { return handleError(res, err); }
+    if(!artisan) { return res.send(404); }
+
+    artisan.workPictures.push(_.pick(req.body, ['url', 'title']));
+    artisan.save(function (err) {
+      if (err) { return handleError(res, err); }
+      
+      getArtisan(artisan._id, function (a) {
+        return res.json(a);
+      });
+    });
+  });
+};
+
+/**
+ * Delete a Work Picture
+ *
+ * @param req
+ * @param res
+ */
+exports.removeWorkPic = function (req, res) {
+  Artisan.findById(req.params.id, function (err, artisan) {
+    if (err) { return handleError(res, err); }
+    if(!artisan) { return res.send(404); }
+
+    artisan.workPictures.id(req.params.pictureId).remove();
+
+    artisan.save(function (err) {
+      if (err) { return handleError(res, err); }
+      getArtisan(artisan._id, function (a) {
+        return res.json(a);
+      });
+    });
+  });
+};
+
 // Soft delete an artisan
 exports.destroy = function(req, res) {
   Artisan.findById(req.params.id, function (err, artisan) {
@@ -90,6 +131,18 @@ exports.destroy = function(req, res) {
     });
   });
 };
+
+function getArtisan(id, callback) {
+  Artisan.findById(id)
+    .populate('bankDetails.bank', '_id name')
+    .populate('rep', '_id name')
+    .populate('specialty', '_id name description')
+    .populate('deletedBy', '_id name')
+    .exec(function (err, a) {
+      if (err) { return handleError(res, err); }
+      return callback(a);
+    });
+}
 
 function handleError(res, err) {
   if (err.name == 'ValidationError') {
