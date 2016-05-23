@@ -61,6 +61,18 @@ exports.create = function(req, res) {
 // Updates an existing artisan in the DB.
 exports.update = function(req, res) {
   if(req.body._id) { delete req.body._id; }
+
+  if (req.body.rep != undefined) {
+    req.body.rep = req.rep;
+  }
+  if (req.body.specialty != undefined) {
+    req.body.specialty = req.body.specialty._id;
+  }
+
+  if (req.body.bankDetails != undefined) {
+    req.body.bankDetails.bank = req.body.bankDetails.bank._id;
+  }
+
   Artisan.findById(req.params.id, function (err, artisan) {
     if (err) { return handleError(res, err); }
     if(!artisan) { return res.send(404); }
@@ -147,6 +159,7 @@ function getArtisan(id, callback) {
 }
 
 function handleError(res, err) {
+  console.log(err);
   if (err.name == 'ValidationError') {
     return res.status(400).json({ message: err.message, errors: err.errors });
   }
