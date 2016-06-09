@@ -1,7 +1,8 @@
 'use strict';
 
 var _ = require('lodash');
-var Artisan = require('./artisan.model');
+var Artisan = require('./artisan.model'),
+  mailer = require('../../components/tools/mailer');
 
 // Get list of artisans
 exports.index = function(req, res) {
@@ -54,7 +55,11 @@ exports.create = function(req, res) {
 
   Artisan.create(req.body, function(err, artisan) {
     if(err) { return handleError(res, err); }
-    return res.json(201, artisan);
+
+    mailer.sendWelcomeSMS(artisan, function (err) {
+      console.log('SMS ERROR: ', err);
+      return res.json(201, artisan);
+    });
   });
 };
 
